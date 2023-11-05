@@ -7,14 +7,23 @@ public class Slime : MonoBehaviour
 
     public Transform a,b;
 
+    private Animator anim;
+
     private bool goRight;
     [Header("Velocity Movement")]
 
     public float speedMove = 7f;
+
+    private BoxCollider2D box2D;
+
+    public GameObject objChild;
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
+        box2D = GetComponent<BoxCollider2D>();
+
+        objChild = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -36,6 +45,16 @@ public class Slime : MonoBehaviour
                 goRight = true;
             }
             transform.position = Vector2.MoveTowards(transform.position, a.position, speedMove * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.layer == 10 || other.gameObject.layer == 11){
+            box2D.enabled = false;
+            speedMove = 0f;
+            if(objChild != null){objChild.SetActive(false);}
+            anim.Play("death");
+            SFXController.Instance.SFX("DeathEnemy", 0.7f);
         }
     }
 

@@ -11,12 +11,15 @@ public class Fly : MonoBehaviour
     private float ang = 0f;
     public float distanceToPlayer = 10f;
     
+    private BoxCollider2D box2D;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        box2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -54,7 +57,12 @@ public class Fly : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.layer == 10){
+        if(other.gameObject.layer == 6){
+            GameController.instance.RestartGame();
+        }
+        
+        if(other.gameObject.layer == 10 || other.gameObject.layer == 11){
+            box2D.enabled = false;
             speed = 0f;
             anim.Play("Explosion");
             SFXController.Instance.SFX("DeathEnemy", 0.7f);

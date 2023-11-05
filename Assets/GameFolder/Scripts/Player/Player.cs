@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     public float wallCheckDistance;
 
-    private bool isSliding;
+    [HideInInspector]public bool isSliding;
     [Header("velocity slide wall")]
 
     public float wallSlideSpeed;
@@ -213,16 +213,16 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.layer == 8){
             GameController.instance.RestartGame();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }else if(other.gameObject.layer == 9){
             SceneManager.LoadScene("Win");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.layer == 8){
-            GameController.instance.RestartGame();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+        // if(other.gameObject.layer == 8){
+        //     GameController.instance.RestartGame();
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // }
     }
 }
