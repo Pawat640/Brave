@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fly : MonoBehaviour
 {
@@ -58,7 +59,8 @@ public class Fly : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == 6){
-            GameController.instance.RestartGame();
+            SFXController.Instance.SFX("Lose", 0.5f);
+            SceneManager.LoadScene("Game_Over");
         }
         
         if(other.gameObject.layer == 10 || other.gameObject.layer == 11){

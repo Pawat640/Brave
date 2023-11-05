@@ -212,17 +212,21 @@ public class Player : MonoBehaviour
     // }
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.layer == 8){
-            GameController.instance.RestartGame();
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene("Game_Over");
+            SFXController.Instance.SFX("Lose", 0.5f);
+            // GameController.instance.RestartGame();
         }else if(other.gameObject.layer == 9){
             SceneManager.LoadScene("Win");
+            SFXController.Instance.SFX("Win", 0.5f);
+        }else if(other.gameObject.layer == 12){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        // if(other.gameObject.layer == 8){
-        //     GameController.instance.RestartGame();
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        // }
-    }
+    // private void OnTriggerEnter2D(Collider2D other) {
+    //     if(other.gameObject.layer == 8){
+    //         GameController.instance.RestartGame();
+    //         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    //     }
+    // }
 }

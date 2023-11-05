@@ -7,6 +7,6 @@ public class ReturnMenu : MonoBehaviour
 {
     public void ReturntoMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("Start");
     }
 }

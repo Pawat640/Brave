@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Slime : MonoBehaviour
 {
@@ -55,6 +56,11 @@ public class Slime : MonoBehaviour
             if(objChild != null){objChild.SetActive(false);}
             anim.Play("death");
             SFXController.Instance.SFX("DeathEnemy", 0.7f);
+        }
+
+        if(other.gameObject.layer == 6){
+            SFXController.Instance.SFX("Lose", 0.5f);
+            SceneManager.LoadScene("Game_Over");
         }
     }
 

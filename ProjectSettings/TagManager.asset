@@ -17,7 +17,7 @@ TagManager:
   - Checkpoint
   - Sword
   - Sword
-  - 
+  - Next
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 3377609633
+    locked: 0
+  - name: Begin
+    uniqueID: 3061094411
     locked: 0
