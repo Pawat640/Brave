@@ -22,6 +22,9 @@ public class EnemyHead : MonoBehaviour
             anim.Play("death");
             other.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
                 other.gameObject.GetComponent<Rigidbody2D>().velocity.x,15f);
+            // other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            // GetComponent<BoxCollider2D>().enabled = false;
+            SFXController.Instance.SFX("DeathEnemy", 0.7f);
         }
     }
 }

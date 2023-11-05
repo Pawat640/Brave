@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public Animator playerAnim;
     [SerializeField] private LayerMask groundMask;
+    [HideInInspector] public bool isPlayerStopped;
 
     private float moveInput;
 
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     public float slopeCheckDistance;
     private float slopeAngle;
     private bool onSlope;
+
+    private bool isLandGround = true;
 
     // Start is called before the first frame update
     void Start()
@@ -94,12 +97,19 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator jumpSlide(){
+        SFXController.Instance.SFX("PlayerJump", 0.3f);
         transform.localScale = new Vector3(-moveInput,1f,1f);
         yield return new WaitForSeconds(0.3f);
         onSliding = false;
     }
 
     private void InputSystem(){
+
+        if(isPlayerStopped){
+            moveInput = 0f;
+            return;
+        }
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if(moveInput != 0f && !onSliding){
@@ -142,6 +152,7 @@ public class Player : MonoBehaviour
         isJump = true;
         rb2d.gravityScale = 3f;
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+        SFXController.Instance.SFX("PlayerJump", 0.3f);
     }
 
     private void Slopes(){
@@ -149,7 +160,7 @@ public class Player : MonoBehaviour
 
         //Debug.DrawRay(transform.position, Vector2.down * slopeCheckDistance, Color.red);
 
-        if(hitSlope){
+        if(hitSlope && !isJump){
             slopeAngle = Vector2.Angle(hitSlope.normal, Vector2.up);
 
             print(slopeAngle);
@@ -161,6 +172,14 @@ public class Player : MonoBehaviour
             }else{
                 rb2d.sharedMaterial = noFriction;
             }
+
+            if(!isLandGround){
+                SFXController.Instance.SFX("LandGround", 0.1f);
+                isLandGround = true;
+            }
+        }else{
+            rb2d.sharedMaterial = noFriction;
+            isLandGround = false;
         }
     }
 
@@ -197,6 +216,13 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }else if(other.gameObject.layer == 9){
             SceneManager.LoadScene("Win");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.layer == 8){
+            GameController.instance.RestartGame();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
