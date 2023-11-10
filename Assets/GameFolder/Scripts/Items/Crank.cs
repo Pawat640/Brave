@@ -26,7 +26,7 @@ public class Crank : MonoBehaviour
     {
         if(Vector2.Distance(gate.position, wayPoint.position) > 0.1f){  
             gate.position = Vector2.MoveTowards(gate.position, wayPoint.position, 15f * Time.deltaTime);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.1f);
             if(!SFXController.Instance.audioSource[2].isPlaying){
                 SFXController.Instance.SFX("Gate", 0.5f);
             }
